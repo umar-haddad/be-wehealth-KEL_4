@@ -1,37 +1,10 @@
-# skilvul-api-mongo
+# wehealth-api
 
-For Testing Purpose
-
-Todo List API Services using Express JS
+This application is a REST API for WeHealth application. This application is built using Node.js, Express.js, and MongoDB.
 
 ## Installation and Setup Instructions
 
-### With Docker
-
-#### Prerequisites
-
-1. Docker
-2. Docker Compose
-3. Git
-4. Node.js
-5. NPM
-
-#### Installation
-
-1. Clone this repository: `git clone
-2. Change directory to the project: `cd skilvul-api-mongo`
-3. Install dependencies: `npm install`
-4. Build the application: `docker-compose build`
-5. Run the application: `docker-compose up`
-6. The application will be available at: `http://localhost:3001`
-7. To stop the application: `docker-compose down`
-8. To run the application in background: `docker-compose up -d`
-9. To stop the application in background: `docker-compose stop`
-10. To remove the application in background: `docker-compose rm`
-
-### Without Docker
-
-#### Prerequisites
+### Prerequisites
 
 1. Git
 2. Node.js
@@ -44,23 +17,17 @@ Todo List API Services using Express JS
 2. Change directory to the project: `cd skilvul-api-mongo`
 3. Install dependencies: `npm install`
 4. Run the application: `npm start` or `npm run dev` for development mode
-5. The application will be available at: `http://localhost:3001`
+5. The application will be available at: `http://localhost:3000`
 
 ## Domain Services
 
-### Task
+### user
 
-1. Create Task
-2. Get All Tasks with filters
-3. Get Task By Id
-4. Update Task
-5. Delete Task
+1. Register
+2. Login
 
 ## API Documentation
 
 ## Author
 
-- [Anhar Solehudin] (anhsbolic@gmail.com)
-
-
-
+- kelompok 4 - skilvul
