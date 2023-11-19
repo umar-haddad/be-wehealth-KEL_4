@@ -1,5 +1,6 @@
 const { Article } = require('../article');
 const mongoQuery = require('../../../utils/mongoQuery');
+const fileHelper = require('../../../utils/fileHelper');
 
 /**
  * Get List Data
@@ -89,8 +90,19 @@ const findById = async (id) => {
 /**
  * Create New Data
  * @param {Object} data
+ * @param {Object} file
  */
-const save = async (data) => {
+const save = async (data, file) => {
+  if (file) {
+    data.image = file.filename;
+  }
+
+  // upload file
+  let uploadedFile = await fileHelper.upload(file.buffer);
+  if (!uploadedFile) errorHelper.throwInternalServerError('Upload File Failed');
+
+  data.image = uploadedFile.secure_url;
+
   let article = new Article(data);
   return article.save();
 };

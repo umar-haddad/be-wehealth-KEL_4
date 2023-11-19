@@ -47,6 +47,33 @@ const detail = async (req, res) => {
 };
 
 /**
+ * Create One Article
+ * @param {Object} req express request object
+ * @param {Object} res express response object
+ */
+
+const createOne = async (req, res) => {
+  try {
+    const result = await service.createOne(req.body, req.file);
+    return respond.responseSuccess(
+      res,
+      'Article created successfully',
+      result,
+      undefined
+    );
+  } catch (e) {
+    if (e.name === errorHelper.BAD_REQUEST) {
+      return respond.responseBadRequest(res, e.message);
+    }
+    if (e.name === errorHelper.UNPROCESSABLE_ENTITY) {
+      return respond.responseUnprocessableEntity(res, e.message);
+    }
+    logger.info(e);
+    return respond.responseError(res, e.statusCode, e.message);
+  }
+};
+
+/**
  * Update One Article
  * @param {Object} req express request object
  * @param {Object} res express response object
@@ -109,4 +136,5 @@ module.exports = {
   detail,
   updateOne,
   deleteOne,
+  createOne,
 };

@@ -24,6 +24,22 @@ const detail = async (id) => {
 };
 
 /**
+ * Create One Article
+ * @param {Object} body
+ * @param {Object} file
+ */
+const createOne = async (body, file) => {
+  // create article
+  let createdArticle = await repository.save(body, file);
+  if (!createdArticle)
+    errorHelper.throwInternalServerError('Create Article Failed');
+
+  return {
+    article: createdArticle,
+  };
+};
+
+/**
  * Update One article
  * @param {String} id
  * @param {Object} body
@@ -63,4 +79,5 @@ module.exports = {
   detail,
   updateOne,
   deleteOne,
+  createOne,
 };
