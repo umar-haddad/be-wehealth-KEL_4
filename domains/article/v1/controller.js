@@ -55,7 +55,7 @@ const detail = async (req, res) => {
 const createOne = async (req, res) => {
   try {
     const result = await service.createOne(req.body, req.file);
-    return respond.responseSuccess(
+    return respond.responseCreated(
       res,
       'Article created successfully',
       result,

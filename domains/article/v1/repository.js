@@ -93,15 +93,14 @@ const findById = async (id) => {
  * @param {Object} file
  */
 const save = async (data, file) => {
-  if (file) {
-    data.image = file.filename;
-  }
-
   // upload file
-  let uploadedFile = await fileHelper.upload(file.buffer);
-  if (!uploadedFile) errorHelper.throwInternalServerError('Upload File Failed');
+  if (file) {
+    let uploadedFile = await fileHelper.upload(file.buffer);
+    if (!uploadedFile)
+      errorHelper.throwInternalServerError('Upload File Failed');
 
-  data.image = uploadedFile.secure_url;
+    data.image = uploadedFile.secure_url;
+  }
 
   let article = new Article(data);
   return article.save();
