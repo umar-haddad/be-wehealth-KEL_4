@@ -1,7 +1,6 @@
 const cloudinary = require('cloudinary').v2;
-// https://cloudinary.com/documentation/image_upload_api_reference
 
-const upload = async (fileBuffer) => {
+const upload = async (fileBuffer, oldPublicId) => {
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -10,8 +9,14 @@ const upload = async (fileBuffer) => {
 
   const options = {
     resource_type: 'image',
-    public_id: `wehealth/images/${Date.now()}`, // Generate a unique file name using timestamp
+    public_id: `wehealth/images`,
+    overwrite: true,
   };
+
+  // Delete the old image if a public ID is provided
+  if (oldPublicId) {
+    await cloudinary.uploader.destroy(oldPublicId);
+  }
 
   return new Promise((resolve, reject) => {
     cloudinary.uploader
