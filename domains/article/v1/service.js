@@ -44,12 +44,11 @@ const createOne = async (body, file) => {
  * @param {String} id
  * @param {Object} body
  */
-const updateOne = async (id, body) => {
+const updateOne = async (id, body, file) => {
   const article = await repository.findById(id);
   if (!article) errorHelper.throwNotFound('Article Not Found');
 
-  // update user
-  let updatedArticle = await repository.updateOne(id, body);
+  let updatedArticle = await repository.updateOne(id, body, file);
   if (!updatedArticle)
     errorHelper.throwInternalServerError('Update Article Failed');
 

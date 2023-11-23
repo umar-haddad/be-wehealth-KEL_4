@@ -22,8 +22,8 @@ const list = async (params) => {
   if (params.search && params.search !== '') {
     filters.push({
       $or: [
-        { first_name: mongoQuery.searchLike(params.search) },
-        { last_name: mongoQuery.searchLike(params.search) },
+        { title: mongoQuery.searchLike(params.search) },
+        { category: mongoQuery.searchLike(params.search) },
       ],
     });
   }
@@ -111,7 +111,17 @@ const save = async (data, file) => {
  * @param {String} id
  * @param {Object} data
  */
-const updateOne = async (id, data) => {
+const updateOne = async (id, data, file) => {
+  // const oldData = await Article.findOne({ _id: id });
+  // upload file
+  if (file) {
+    let uploadedFile = await fileHelper.upload(file.buffer);
+    if (!uploadedFile)
+      errorHelper.throwInternalServerError('Upload File Failed');
+
+    data.image = uploadedFile.secure_url;
+  }
+
   return Article.findOneAndUpdate({ _id: id }, data, {
     returnOriginal: false,
   });
