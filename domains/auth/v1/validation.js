@@ -7,6 +7,8 @@ const register = joi.object({
   first_name: joi.string().required(),
   last_name: joi.string().required(),
   email: joi.string().required().email(),
+  phone: joi.string().allow('', null),
+  address: joi.string().allow('', null),
   password: joiPassword
     .string()
     .minOfLowercase(5)
