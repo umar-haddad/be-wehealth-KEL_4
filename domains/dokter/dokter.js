@@ -10,18 +10,7 @@ const dokterSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    rating: {
-      type: String,
-      required: true,
-    },
-    year: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
+    // tambahin user.id
     image: {
       type: String,
     },
