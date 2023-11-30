@@ -1,4 +1,5 @@
 const { Dokter } = require('../dokter');
+const { User } = require('../../user/user');
 const mongoQuery = require('../../../utils/mongoQuery');
 const fileHelper = require('../../../utils/fileHelper');
 
@@ -67,6 +68,12 @@ const list = async (params) => {
   // get data
   const data = await Dokter.aggregate(pipelines);
 
+  // populate user
+  let userIds = [];
+  data.forEach((item) => {
+    userIds.push(item.user);
+  });
+
   // return
   return {
     data: data,
@@ -84,7 +91,7 @@ const list = async (params) => {
  * @param {String} id
  */
 const findById = async (id) => {
-  return Dokter.findOne({ _id: id });
+  return Dokter.findOne({ _id: id }).populate('user');
 };
 
 /**
@@ -92,6 +99,27 @@ const findById = async (id) => {
  * @param {Object} data
  * @param {Object} file
  */
+/*
+ email: {
+      type: String,
+      lowercase: true,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    first_name: {
+      type: String,
+      required: true,
+    },
+    last_name: {
+      type: String,
+      required: true,
+    },
+*/
+
 const save = async (data, file) => {
   // upload file
   if (file) {
@@ -102,7 +130,22 @@ const save = async (data, file) => {
     data.image = uploadedFile.secure_url;
   }
 
-  let dokter = new Dokter(data);
+  // create user
+  let createdUser = await User.create({
+    email: data.email,
+    password: data.password,
+    first_name: data.first_name,
+    last_name: data.last_name,
+    role: 'doctor',
+  });
+
+  let dokter = new Dokter({
+    name: data.name,
+    category: data.category,
+    user: createdUser._id,
+    image: data.image,
+  });
+
   return dokter.save();
 };
 
