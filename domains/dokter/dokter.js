@@ -11,6 +11,11 @@ const dokterSchema = mongoose.Schema(
       required: true,
     },
     // tambahin user.id
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'dokter must belong to a user.'],
+    },
     image: {
       type: String,
     },
