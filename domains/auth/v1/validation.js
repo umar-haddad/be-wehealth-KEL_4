@@ -7,8 +7,8 @@ const register = joi.object({
   first_name: joi.string().required(),
   last_name: joi.string().required(),
   email: joi.string().required().email(),
-  phone: joi.string().required(),
-  address: joi.string().required(),
+  phone: joi.string().allow('', null),
+  address: joi.string().allow('', null),
   password: joiPassword
     .string()
     .minOfLowercase(5)
@@ -18,10 +18,7 @@ const register = joi.object({
     .noWhiteSpaces()
     .onlyLatinCharacters()
     .required(),
-  role: joi
-    .string()
-    .valid(...USER_ROLE_LIST)
-    .required(),
+  role: joi.string().valid(...USER_ROLE_LIST),
 });
 
 const login = joi.object({
