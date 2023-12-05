@@ -154,7 +154,15 @@ const save = async (data, file) => {
  * @param {String} id
  * @param {Object} data
  */
-const updateOne = async (id, data) => {
+const updateOne = async (id, data, file) => {
+  if (file) {
+    let uploadedFile = await fileHelper.upload(file.buffer);
+    if (!uploadedFile)
+      errorHelper.throwInternalServerError('Upload File Failed');
+
+    data.image = uploadedFile.secure_url;
+  }
+
   return Dokter.findOneAndUpdate({ _id: id }, data, {
     returnOriginal: false,
   });

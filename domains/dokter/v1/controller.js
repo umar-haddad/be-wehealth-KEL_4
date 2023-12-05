@@ -80,7 +80,7 @@ const createOne = async (req, res) => {
  */
 const updateOne = async (req, res) => {
   try {
-    const result = await service.updateOne(req.params.id, req.body);
+    const result = await service.updateOne(req.params.id, req.body, req.file);
     return respond.responseSuccess(
       res,
       'Dokter updated successfully',
