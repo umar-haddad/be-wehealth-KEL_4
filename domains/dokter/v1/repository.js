@@ -23,8 +23,8 @@ const list = async (params) => {
   if (params.search && params.search !== '') {
     filters.push({
       $or: [
-        { first_name: mongoQuery.searchLike(params.search) },
-        { last_name: mongoQuery.searchLike(params.search) },
+        { category: mongoQuery.searchLike(params.search) },
+        { name: mongoQuery.searchLike(params.search) },
       ],
     });
   }
@@ -68,12 +68,6 @@ const list = async (params) => {
   // get data
   const data = await Dokter.aggregate(pipelines);
 
-  // populate user
-  let userIds = [];
-  data.forEach((item) => {
-    userIds.push(item.user);
-  });
-
   // return
   return {
     data: data,
@@ -99,27 +93,6 @@ const findById = async (id) => {
  * @param {Object} data
  * @param {Object} file
  */
-/*
- email: {
-      type: String,
-      lowercase: true,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    first_name: {
-      type: String,
-      required: true,
-    },
-    last_name: {
-      type: String,
-      required: true,
-    },
-*/
-
 const save = async (data, file) => {
   // upload file
   if (file) {
