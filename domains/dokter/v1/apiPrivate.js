@@ -19,7 +19,7 @@ router.post('/', upload.single('image'), controller.createOne);
  * Update One Dokter
  * @api private
  */
-router.patch('/:id', controller.updateOne);
+router.patch('/:id', upload.single('image'), controller.updateOne);
 
 /**
  * Delete One Dokter
